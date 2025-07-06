@@ -1,5 +1,5 @@
 import re
-from .guardrails import GoalInput
+from guardrails import GoalInput
 from utils.openai_mock import Tool
 
 class GoalAnalyzerTool(Tool):
