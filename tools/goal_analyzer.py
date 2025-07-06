@@ -1,30 +1,62 @@
-import re
 from guardrails import GoalInput
-from utils.openai_mock import Tool
 
-class GoalAnalyzerTool(Tool):
-    name = "goal_analyzer"
-
-    async def __call__(self, input_text: str) -> GoalInput:
-        input_text = input_text.lower()
+class GoalAnalyzerTool:
+    async def __call__(self, user_input: str) -> dict:
         
-        if "lose" in input_text:
-            objective = "lose"
-        elif "gain" in input_text:
+        user_input = user_input.lower()
+
+        
+        objective = "lose"
+        quantity = 5
+        unit = "kg"
+        duration = "2 months"
+
+
+        if "gain" in user_input or "weight gain" in user_input:
             objective = "gain"
-        else:
-            raise ValueError("Please specify if you want to 'lose' or 'gain' weight.")
+        elif "lose" in user_input:
+            objective = "lose"
+        elif "maintain" in user_input:
+            objective = "maintain"
+
         
-        quantity_match = re.search(r"(\d+)\s*(kg|lbs)", input_text)
-        if not quantity_match:
-            raise ValueError("Please mention a target weight, e.g., '5 kg' or '10 lbs'.")
-        quantity = float(quantity_match.group(1))
-        unit = quantity_match.group(2)
+        import re
+        q_match = re.search(r'(\d+(\.\d+)?)', user_input)
+        if q_match:
+            quantity = float(q_match.group(1))
+
         
-        duration_match = re.search(r"in\s+(\d+\s+\w+)", input_text)
-        if not duration_match:
-            duration = "3 months" 
-        else:
-            duration = duration_match.group(1)
+        if "kg" in user_input:
+            unit = "kg"
+        elif "lb" in user_input or "lbs" in user_input:
+            unit = "lbs"
+
         
-        return GoalInput(objective=objective, quantity=quantity, unit=unit, duration=duration)
+        if "month" in user_input:
+            duration = "2 months"  
+            d_match = re.search(r'(\d+)\s*month', user_input)
+            if d_match:
+                duration = f"{d_match.group(1)} months"
+        elif "week" in user_input:
+            duration = "2 weeks"
+            d_match = re.search(r'(\d+)\s*week', user_input)
+            if d_match:
+                duration = f"{d_match.group(1)} weeks"
+        elif "year" in user_input:
+            duration = "1 year"
+            d_match = re.search(r'(\d+)\s*year', user_input)
+            if d_match:
+                duration = f"{d_match.group(1)} years"
+
+        
+        goal = GoalInput(
+            objective=objective,
+            quantity=quantity,
+            unit=unit,
+            duration=duration
+        )
+
+        
+        return goal.dict()
+
+
