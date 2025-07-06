@@ -1,6 +1,6 @@
 Health & Wellness Planner Agent 🏃‍♀️
 
-An advanced, AI-powered personal health and wellness planner built using OpenAI Agents SDK. This project acts as your intelligent digital wellness assistant: it understands your goals, creates customized diet and workout plans, handles illness-specific recommendations, and helps track your progress — all through natural language conversation.
+An advanced, AI-powered personal health and wellness planner built using OpenAI Agents SDK. This project acts as your intelligent digital wellness assistant: it understands your goals, creates customized diet and workout plans, handles illness-specific recommendations, and helps track your progress all through natural language conversation.
 
 🚀 Features
 
