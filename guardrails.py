@@ -12,10 +12,18 @@ class GoalInput(BaseModel):
             raise ValueError("Field cannot be empty")
         return v
 
+    @validator("quantity")
+    def quantity_must_be_positive(cls, v):
+        if v <= 0:
+            raise ValueError("Quantity must be positive")
+        return v
+
 class MealPlanOutput(BaseModel):
-    meals: list
+    meals: list[str]
 
 class WorkoutPlanOutput(BaseModel):
-    workouts: list
+    workouts: list[str]
+
+
 
 
