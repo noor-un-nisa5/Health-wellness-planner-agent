@@ -42,8 +42,3 @@ class GoalAnalyzerTool:
         return goal
 
 
-
-        
-        return goal.dict()
-
-
